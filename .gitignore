@@ -1,0 +1,47 @@
+# COGNITUS .gitignore
+
+# ROS2 build artifacts
+build/
+install/
+log/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+*.egg
+
+# Models (large files)
+models/*.pt
+models/*.onnx
+models/*.engine
+models/phi-3-mini-4bit/
+
+# Data and logs
+logs/*.log
+memory_db/
+*.bag
+*.db3
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.claude
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+.dockerignore
+
+# Temporary
+*.tmp
+*.temp

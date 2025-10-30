@@ -1,0 +1,19 @@
+# COGNITUS Memory Configuration
+
+memory_manager_node:
+  ros__parameters:
+    # Memory tiers
+    working_memory_size: 600  # entries (~10 min @ 1Hz)
+    episodic_retention_days: 7
+    episodic_db_path: "memory_db/episodic.db"
+    long_term_dir: "memory_db/long_term"
+
+    # Consolidation
+    consolidation_interval: 60.0  # seconds
+
+    # Importance thresholds
+    importance_threshold_episodic: 0.6  # Working → Episodic
+    importance_threshold_alert: 0.8  # Alert brain
+
+    # Simulation
+    use_sim_time: false

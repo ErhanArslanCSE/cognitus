@@ -1,0 +1,38 @@
+# COGNITUS Global Configuration
+
+# System settings
+system:
+  name: "COGNITUS"
+  version: "1.0.0"
+  ros_domain_id: 0
+
+# Environment
+environment:
+  auto_detect: true
+  default: "docker"  # docker or limo_pro
+
+# Logging
+logging:
+  level: "INFO"  # DEBUG, INFO, WARN, ERROR
+  log_dir: "logs/"
+  max_log_size_mb: 100
+
+# Performance
+performance:
+  perception_fps: 10
+  memory_update_hz: 1
+  status_update_hz: 0.2
+
+# Safety
+safety:
+  emergency_stop_enabled: true
+  obstacle_distance_threshold: 0.3  # meters
+  battery_warning_threshold: 20  # percent
+
+# Features
+features:
+  perception: true
+  voice: true
+  memory: true
+  behaviors: true
+  anomaly_detection: true

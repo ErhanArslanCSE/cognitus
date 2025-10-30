@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # Development environment
+  cognitus:
+    build: .
+    container_name: cognitus_dev
+    network_mode: host
+    privileged: true
+    tty: true
+    stdin_open: true
+
+    environment:
+      - DISPLAY=${DISPLAY}
+      - ROS_DOMAIN_ID=0
+      - QT_X11_NO_MITSHM=1
+
+    volumes:
+      # Live code editing (like NextJS hot reload)
+      - ./src:/workspace/src:rw
+      - ./config:/workspace/config:rw
+      - ./models:/workspace/models:rw
+      - ./logs:/workspace/logs:rw
+      # GUI
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+
+    command: bash -c "
+      source /opt/ros/foxy/setup.bash &&
+      source /workspace/install/setup.bash &&
+      echo '' &&
+      echo '🚀 COGNITUS Development Ready!' &&
+      echo '' &&
+      echo 'Run: ros2 launch cognitus_integration demo.launch.py' &&
+      echo '' &&
+      bash
+      "
+
+  # Simulation with Gazebo
+  simulation:
+    extends: cognitus
+    container_name: cognitus_sim
+
+    command: bash -c "
+      source /opt/ros/foxy/setup.bash &&
+      source /workspace/install/setup.bash &&
+      echo '' &&
+      echo '🌍 Starting COGNITUS Simulation...' &&
+      echo '' &&
+      ros2 launch cognitus_integration simulation.launch.py
+      "

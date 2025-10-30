@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>cognitus_integration</name>
+  <version>1.0.0</version>
+  <description>Integration and launch management for COGNITUS</description>
+
+  <maintainer email="cognitus@example.com">COGNITUS Team</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>cognitus_perception</exec_depend>
+  <exec_depend>cognitus_memory</exec_depend>
+  <exec_depend>cognitus_voice</exec_depend>
+  <exec_depend>cognitus_behaviors</exec_depend>
+  <exec_depend>cognitus_cognition</exec_depend>
+
+  <exec_depend>ros2launch</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

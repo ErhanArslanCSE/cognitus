@@ -1,0 +1,35 @@
+# COGNITUS Perception Configuration
+
+perception_node:
+  ros__parameters:
+    # Detection settings
+    detection_fps: 5
+    confidence_threshold: 0.5
+    use_sim_time: false
+
+    # Camera intrinsics (Orbbec DaBai)
+    fx: 554.0
+    fy: 554.0
+    cx: 320.0
+    cy: 240.0
+
+    # 3D processing
+    min_depth: 0.3  # meters
+    max_depth: 10.0  # meters
+    depth_scale: 1000.0  # mm to m
+
+scene_graph_builder:
+  ros__parameters:
+    spatial_threshold: 0.5  # meters for "near" relation
+    use_sim_time: false
+
+    # Spatial relation thresholds
+    vertical_threshold: 0.2  # meters for above/below
+    horizontal_threshold: 0.1  # meters for left/right
+
+anomaly_detector:
+  ros__parameters:
+    learning_period: 100  # observations before detection starts
+    unusual_threshold: 0.05  # 5% frequency = unusual
+    scene_size_variance: 2.0  # 2x size change = anomaly
+    use_sim_time: false

@@ -1,0 +1,52 @@
+# COGNITUS Voice Configuration
+
+stt_node:
+  ros__parameters:
+    # Whisper settings
+    model_size: "tiny"  # tiny, base, small, medium
+    language: "en"  # en, tr, es, fr, etc.
+
+    # Audio capture
+    sample_rate: 16000
+    chunk_duration: 3.0  # seconds per transcription
+
+    # Wake word detection
+    wake_word_enabled: true
+    wake_words: ["hey cognitus", "cognitus", "robot"]
+
+    # Processing
+    vad_threshold: 100  # Voice activity detection threshold
+    silence_timeout: 2.0  # seconds
+
+    use_sim_time: false
+
+tts_node:
+  ros__parameters:
+    # Piper TTS settings
+    voice: "en_US-lessac-medium"  # Voice model
+    speaking_rate: 1.0  # Speed multiplier
+    sample_rate: 22050
+
+    # Piper binary path
+    piper_path: "/usr/local/bin/piper"
+
+    # Fallback
+    use_espeak_fallback: true
+
+    use_sim_time: false
+
+audio_monitor:
+  ros__parameters:
+    # Monitoring settings
+    sample_rate: 16000
+    monitor_interval: 1.0  # seconds
+
+    # Detection thresholds
+    loud_threshold: 5000  # Absolute level for "loud"
+    quiet_threshold: 100  # Absolute level for "quiet"
+    spike_multiplier: 3.0  # 3x baseline = spike
+
+    # Baseline learning
+    baseline_window: 100  # measurements for baseline
+
+    use_sim_time: false

@@ -1,0 +1,46 @@
+# COGNITUS Cognition Configuration
+
+cognitus_brain:
+  ros__parameters:
+    # LLM Selection (change model here)
+    enable_llm: true
+
+    # Option 1: BitNet b1.58 (1-bit, ultra-lightweight)
+    # llm_model_name: "microsoft/bitnet-b1.58-2B-4T"
+    # llm_quantization: "1bit"
+
+    # Option 2: Phi-3.5-mini (4-bit, high capability)  [RECOMMENDED]
+    llm_model_name: "microsoft/Phi-3.5-mini-instruct"
+    llm_quantization: "4bit"
+
+    # Option 3: Phi-4-mini (latest, if available)
+    # llm_model_name: "microsoft/Phi-4-mini"
+    # llm_quantization: "4bit"
+
+    # Option 4: Custom model
+    # llm_model_name: "your-org/your-model"
+    # llm_quantization: "8bit"
+
+    # Generation parameters
+    max_tokens: 150  # Response length (shorter = faster)
+    temperature: 0.7  # Creativity (0.0 = deterministic, 1.0 = creative)
+
+    # Context management
+    max_conversation_history: 10  # Conversation turns to remember
+    system_prompt: ""  # Leave empty for default, or customize
+
+    # Performance
+    use_sim_time: false
+
+# Model Comparison:
+# ┌─────────────┬────────────┬──────────┬─────────┬──────────┐
+# │ Model       │ Size (4bit)│ Latency  │ Memory  │ Quality  │
+# ├─────────────┼────────────┼──────────┼─────────┼──────────┤
+# │ BitNet 1bit │ 0.4GB      │ ~30ms    │ ~1GB    │ Good     │
+# │ Phi-3.5     │ 2.0GB      │ ~200ms   │ ~3GB    │ Excellent│
+# │ Phi-4-mini  │ 2.0GB      │ ~200ms   │ ~3GB    │ Excellent│
+# └─────────────┴────────────┴──────────┴─────────┴──────────┘
+#
+# For Jetson Orin Nano (8GB RAM):
+# - BitNet: Leaves 7GB for other modules (recommended for testing)
+# - Phi-3.5: Leaves 5GB for other modules (recommended for production)

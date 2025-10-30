@@ -1,0 +1,30 @@
+# COGNITUS Behaviors Configuration
+
+behavior_controller:
+  ros__parameters:
+    # Safety thresholds
+    obstacle_threshold: 0.3  # meters - stop if obstacle closer
+    battery_threshold: 20.0  # percent - warn if battery lower
+
+    # Movement defaults
+    default_speed: 0.2  # m/s - forward/backward speed
+    default_angular_speed: 0.5  # rad/s - rotation speed
+
+    # Navigation2
+    navigation_timeout: 60.0  # seconds - max time for navigation
+    goal_tolerance: 0.1  # meters - how close to goal
+
+    # Simulation
+    use_sim_time: false
+
+# Safety Notes:
+# - obstacle_threshold: Increase for more cautious behavior
+# - battery_threshold: Robot will warn but continue (brain decides)
+# - Emergency stop at 0.15m (hardcoded minimum)
+#
+# LIMO Pro Drive Modes:
+# - Differential: Standard, best for navigation
+# - Mecanum: Strafing possible (lateral movement)
+# - Ackermann: Car-like steering
+# - Track: High traction, rough terrain
+# (Mode switching done via LIMO control, not this module)
