@@ -33,9 +33,25 @@ class PerceptionNode(Node):
         self.declare_parameter('detection_fps', 5)
         self.declare_parameter('confidence_threshold', 0.5)
         self.declare_parameter('use_sim_time', False)
+        self.declare_parameter('fx', 554.0)
+        self.declare_parameter('fy', 554.0)
+        self.declare_parameter('cx', 320.0)
+        self.declare_parameter('cy', 240.0)
+        self.declare_parameter('min_depth', 0.3)
+        self.declare_parameter('max_depth', 10.0)
+        self.declare_parameter('depth_scale', 1000.0)
 
         fps = self.get_parameter('detection_fps').value
         self.conf_threshold = self.get_parameter('confidence_threshold').value
+
+        # Camera intrinsics (from config)
+        self.fx = self.get_parameter('fx').value
+        self.fy = self.get_parameter('fy').value
+        self.cx = self.get_parameter('cx').value
+        self.cy = self.get_parameter('cy').value
+        self.min_depth = self.get_parameter('min_depth').value
+        self.max_depth = self.get_parameter('max_depth').value
+        self.depth_scale = self.get_parameter('depth_scale').value
 
         # CV Bridge
         self.bridge = CvBridge()
@@ -45,12 +61,6 @@ class PerceptionNode(Node):
         self.depth_image = None
         self.model = None
         self.detection_count = 0
-
-        # Camera intrinsics (Orbbec DaBai defaults)
-        self.fx = 554.0
-        self.fy = 554.0
-        self.cx = 320.0
-        self.cy = 240.0
 
         # Load YOLOv8
         self._load_yolo()
@@ -185,8 +195,12 @@ class PerceptionNode(Node):
             if depth_value == 0 or np.isnan(depth_value):
                 return None
 
-            # Convert to meters (Orbbec outputs mm)
-            depth_m = float(depth_value) / 1000.0
+            # Convert to meters (using configured scale)
+            depth_m = float(depth_value) / self.depth_scale
+
+            # Check depth range
+            if depth_m < self.min_depth or depth_m > self.max_depth:
+                return None
 
             # Project to 3D
             x_3d = (cx - self.cx) * depth_m / self.fx
